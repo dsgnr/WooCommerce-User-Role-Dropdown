@@ -9,23 +9,18 @@
     */
 
 
-
-
-
-
-
-
 function user_role_dropdown() {
   $wp_roles = new WP_Roles();
 	$wp_roles->use_db = true;
-	$role_names = $wp_roles->get_names();
 
-	foreach( $role_names as $role_name ) {
-		if ( ($role_name !== 'Administrator') and ($role_name !== 'Editor') and ($role_name !== 'Author') and ($role_name !== 'Contributor' ) and ($role_name !== 'Subscriber') and ($role_name !== 'UK')and ($role_name !== 'USA')and ($role_name !== 'Customer')and ($role_name !== 'Shop Manager') ) {
-			$role_option .= "<option value='.strtolower($role_name).'>$role_name</option>";
-		}
-	}
-	echo  '<label><select id="role" name="role" class="input">' . $role_option . '</select></label>';
+    echo '<select id ="role" name="role">';
+    foreach ( $wp_roles->roles as $key=>$value ) {
+        if (($value['name'] !== 'Administrator') and ($value['name'] !== 'Editor') and ($value['name'] !== 'Author') and ($value['name'] !== 'Contributor') and ($value['name'] !== 'Subscriber') and ($value['name'] !== 'UK') and ($value['name'] !== 'USA') and ($value['name'] !== 'Customer') and ($value['name'] !== 'Shop manager')) {
+            echo '<option value="' . $key . '">' . $value['name'] . '</option>';
+        }
+    }
+    echo '</select>';
+
 }
 
 add_action( 'woocommerce_register_form', 'user_role_dropdown' );
